@@ -27,5 +27,8 @@
     "security"
   ],
   "author": "dtherrick",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "provenance": true
+  }
 }
