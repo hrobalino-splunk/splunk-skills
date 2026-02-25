@@ -1,6 +1,6 @@
 {
   "name": "splunk-skills",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Agent skills and subagents for Splunk — threat hunting, TA development, and dashboard building for Cursor and other AI coding agents",
   "bin": {
     "splunk-skills": "./bin/cli.mjs"
