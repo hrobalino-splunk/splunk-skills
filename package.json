@@ -1,0 +1,31 @@
+{
+  "name": "splunk-skills",
+  "version": "1.0.0",
+  "description": "Agent skills and subagents for Splunk — threat hunting, TA development, and dashboard building for Cursor and other AI coding agents",
+  "bin": {
+    "splunk-skills": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "agents/",
+    "README.md"
+  ],
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dtherrick/splunk-skills.git"
+  },
+  "keywords": [
+    "splunk",
+    "cursor",
+    "agent-skills",
+    "threat-hunting",
+    "spl",
+    "dashboard",
+    "siem",
+    "security"
+  ],
+  "author": "dtherrick",
+  "license": "MIT"
+}
