@@ -1,20 +1,15 @@
 # splunk-xml-dashboard-builder
 
-Build Splunk Simple XML dashboards from SPL queries and analysis context. Designed for security operations, threat hunting, and operational monitoring. Compatible with [Claude Desktop](https://claude.ai/download) and any AI agent supporting the [Agent Skills](https://agentskills.io/) format.
+Build Splunk Simple XML dashboards from SPL queries and analysis context. Designed for security operations, threat hunting, and operational monitoring. Compatible with [Claude Desktop](https://claude.ai/download).
 
 ## Installation
 
-### Global install
+### Install in Claude Desktop
 
-```bash
-npx splunk-xml-dashboard-builder
-```
-
-Or for a specific project:
-
-```bash
-npx splunk-xml-dashboard-builder --project
-```
+1. Open Claude Desktop and go to **Settings > Capabilities > Skills**.
+2. Click **Go to Customize**.
+3. Click **Add Skill** and select Upload a skill:
+4. Upload the Zipped Skill File. The skill will be available for use in your Claude Desktop.
 
 ## What's Included
 
