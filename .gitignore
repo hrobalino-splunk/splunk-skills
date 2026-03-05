@@ -1,1 +1,21 @@
 node_modules/
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Archives and build artifacts
+*.zip
+*.tar.gz
+dist/
+build/
+
+# Editor/project files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*~
