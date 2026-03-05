@@ -1,27 +1,20 @@
 ---
-name: splunk-dashboard-builder
-description: Builds Splunk Simple XML dashboards from SPL queries, hunt findings, and analysis context. Use proactively when a workflow produces SPL queries, analysis results, or findings that should be visualized in a Splunk dashboard. Specializes in security operations dashboards, threat hunting dashboards, and operational monitoring dashboards. Expects SPL queries as input and produces validated Simple XML that can be deployed directly to a Splunk instance.
+name: splunk-xml-dashboard-builder
+description: Build Splunk Simple XML dashboards from SPL queries, hunt findings, and analysis context. Specializes in security operations dashboards, threat hunting dashboards, and operational monitoring dashboards. Use when you have SPL queries and analysis results that need to be visualized in a Splunk dashboard that can be deployed directly to a Splunk instance.
 ---
 
 # Splunk Simple XML Dashboard Builder
 
-You are an expert Splunk dashboard architect. Your job is to take SPL queries, analysis context, and findings from a parent workflow and assemble a well-designed, validated Simple XML dashboard that can be deployed to a Splunk instance.
+Build production-quality Splunk dashboards using Simple XML. This skill covers dashboard design principles, complete XML reference, visualization selection, panel configuration, interactivity with form inputs, and layout best practices for security operations and threat hunting.
 
-## When You Are Invoked
+## When to Use This Skill
 
-A parent skill or workflow will provide you with some combination of:
-- **SPL queries** that retrieve or transform data
-- **Context** about what the queries do and why (e.g., threat hunt findings, operational monitoring, compliance checks)
-- **Field names** and their meanings
-- **Time ranges** relevant to the analysis
-- **Desired visualizations** (sometimes explicit, sometimes you must infer the best choice)
-
-Your job is to:
-1. Understand the analytical intent behind the queries
-2. Select appropriate visualizations for each query
-3. Assemble a complete, valid Simple XML dashboard
-4. Test the dashboard if a Playwright MCP server or Splunk MCP server is available
-5. Deliver the final XML and deployment instructions
+- You have SPL queries that need dashboard visualization
+- You're building threat hunting dashboards
+- You're creating operational monitoring dashboards
+- You need security operations center (SOC) dashboards
+- You want to share analysis results as interactive Splunk dashboards
+- You're building dashboards that can be deployed to a Splunk instance
 
 ## Dashboard Design Principles
 
@@ -572,17 +565,11 @@ Check the XML for:
 - No duplicate element IDs
 - Appropriate `version="1.1"` on root element
 
-### Step 6: Test (if tools available)
+### Step 6: Test
 
 **If Splunk MCP server is available**:
-- Run each SPL query individually using `run_splunk_query` to verify they return data
+- Run each SPL query individually to verify they return data
 - Check that field names in the results match what the visualizations expect
-
-**If Playwright MCP server is available**:
-- Navigate to the Splunk instance
-- Create or update the dashboard via the Splunk Web UI
-- Take screenshots to verify rendering
-- Test form inputs and drilldown behavior
 
 ### Step 7: Deliver
 
@@ -630,92 +617,6 @@ Row 4: User activity timeline (depends on selection)
 
 ---
 
-## Splunk Authentication
-
-When you need to interact directly with a Splunk environment (via Playwright, REST API, or any other method), you will need credentials. Follow this procedure:
-
-### Step 1: Check Environment Variables
-
-First, check for the presence of these environment variables:
-- `SPLUNK_USERNAME` — The Splunk login username
-- `SPLUNK_PASSWORD` — The Splunk login password
-
-Use the shell to check:
-```bash
-echo $SPLUNK_USERNAME
-echo $SPLUNK_PASSWORD
-```
-
-### Step 2: If Credentials Are Not Set
-
-If either variable is empty or not set, the approach depends on how you are accessing Splunk:
-
-**If using Playwright (browser-based)**:
-- Navigate to the Splunk login page
-- Take a snapshot so the user can see the login form
-- Ask the user to enter their credentials directly in the Playwright browser by saying something like: *"I've navigated to the Splunk login page. Please enter your credentials in the browser and click Sign In. Let me know once you're logged in and I'll continue."*
-- Wait for the user to confirm they have logged in before proceeding
-- Do NOT ask the user to paste their password into the chat
-
-**If using REST API, Splunk MCP server, or other non-browser methods**:
-- Ask the user to provide the credentials in the chat, or to set the environment variables:
-  ```
-  export SPLUNK_USERNAME="your_username"
-  export SPLUNK_PASSWORD="your_password"
-  ```
-- If the user provides credentials in the chat, use them for the current session only — do NOT store them in any file, variable, or configuration that persists beyond the current interaction
-
-### Step 3: Security Rules for Credentials
-
-- **NEVER** write credentials to any file (scripts, config files, XML, etc.)
-- **NEVER** embed credentials in dashboard XML or any generated code
-- **NEVER** log or echo credentials in shell output beyond the initial check
-- If credentials were provided in chat, treat them as ephemeral — use them only for the immediate API calls needed
-- Prefer Playwright login (where the user enters credentials directly) over chat-based credential exchange whenever possible
-
----
-
-## Testing with Playwright
-
-When the Playwright MCP server is available (`user-Playwright`), use it to validate dashboards:
-
-### Authenticate to Splunk
-
-1. Navigate to the Splunk login page:
-   ```
-   Tool: browser_navigate
-   URL: https://<splunk_host>:8000/en-US/account/login
-   ```
-2. Take a snapshot to check if already logged in or if a login form is shown
-3. If a login form is present:
-   - Check for `SPLUNK_USERNAME` and `SPLUNK_PASSWORD` environment variables
-   - If set, use `browser_type` and `browser_click` to fill in and submit the form
-   - If not set, ask the user to log in manually in the Playwright browser (see Authentication section above)
-4. After login, verify you are on a Splunk page (not redirected back to login)
-
-### Navigate to Splunk
-```
-Tool: browser_navigate
-URL: https://<splunk_host>:8000/en-US/app/<app>/search
-```
-
-### Create/Update Dashboard via Source Editor
-1. Navigate to the dashboard URL or create new: `https://<splunk_host>:8000/en-US/app/<app>/<view_name>`
-2. Click Edit > Edit Source
-3. Replace the XML content
-4. Save
-
-### Verify Dashboard Rendering
-1. Navigate to the dashboard URL
-2. Take a snapshot to verify panels rendered correctly
-3. Check for error messages or missing data
-4. Test form inputs if present
-
-### Screenshot for Documentation
-Use `browser_snapshot` to capture the rendered dashboard for documentation purposes.
-
----
-
 ## Common Pitfalls to Avoid
 
 1. **Missing transforming commands**: Visualizations (except `<event>`) need `stats`, `timechart`, `chart`, `top`, `rare`, or similar
@@ -726,3 +627,34 @@ Use `browser_snapshot` to capture the rendered dashboard for documentation purpo
 6. **Missing version attribute**: Always use `version="1.1"` to ensure jQuery 3.5+ compatibility
 7. **Overly complex single search**: Break complex queries into base + post-process for maintainability
 8. **No error handling**: Use `<done>` with `<condition match="'job.resultCount' == 0">` to show "no results" messages
+
+---
+
+## Deployment
+
+Simple XML dashboards can be deployed by:
+
+**Via Splunk Web UI**:
+1. Navigate to Settings > User Interface > Views
+2. Click "New View"
+3. Name the dashboard and select the app
+4. Click "Create View"
+5. Edit the view source and paste your XML
+
+**Via Filesystem**:
+1. Save the XML file to: `$SPLUNK_HOME/etc/apps/<app_name>/local/data/ui/views/<dashboard_name>.xml`
+2. Restart Splunk or refresh the app
+3. Navigate to the dashboard in the app
+
+**Via REST API**:
+```bash
+curl -k -u admin:password \
+  https://localhost:8089/servicesNS/nobody/<app_name>/data/ui/views \
+  -d name=<dashboard_name> \
+  -d "eai:data=<xml_content>"
+```
+
+**Via Version Control**:
+- Store dashboard XML in git repository
+- Use CI/CD pipelines to deploy to Splunk instances
+- Integrate with Splunk app packaging workflows

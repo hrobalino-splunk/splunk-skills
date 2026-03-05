@@ -1,34 +1,22 @@
 {
-  "name": "splunk-skills",
-  "version": "1.0.1",
-  "description": "Agent skills and subagents for Splunk — threat hunting, TA development, and dashboard building for Cursor and other AI coding agents",
-  "bin": {
-    "splunk-skills": "./bin/cli.mjs"
-  },
+  "name": "splunk-xml-dashboard-builder",
+  "version": "1.0.0",
+  "description": "Build Splunk Simple XML dashboards from SPL queries and analysis context. Works with Claude Desktop and other AI coding agents that support the Agent Skills specification.",
   "files": [
-    "bin/",
-    "skills/",
-    "agents/",
+    "splunk-dashboard-builder/",
     "README.md"
   ],
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/dtherrick/splunk-skills.git"
   },
   "keywords": [
     "splunk",
-    "cursor",
+    "xml-dashboard",
     "agent-skills",
-    "threat-hunting",
-    "spl",
     "dashboard",
-    "siem",
     "security"
   ],
   "author": "dtherrick",
-  "license": "MIT",
-  "publishConfig": {
-    "provenance": true
-  }
+  "license": "MIT"
 }
