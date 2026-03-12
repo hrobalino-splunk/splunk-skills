@@ -726,3 +726,22 @@ Use `browser_snapshot` to capture the rendered dashboard for documentation purpo
 6. **Missing version attribute**: Always use `version="1.1"` to ensure jQuery 3.5+ compatibility
 7. **Overly complex single search**: Break complex queries into base + post-process for maintainability
 8. **No error handling**: Use `<done>` with `<condition match="'job.resultCount' == 0">` to show "no results" messages
+
+---
+
+## Entity Mappings
+
+When special characters cannot be wrapped in `<![CDATA[...]]>`, use XML entity references:
+
+| Character | Entity | Usage |
+|---|---|---|
+| `'` | `&apos;` | Attribute values with single quotes |
+| `"` | `&quot;` | Attribute values with double quotes |
+| `&` | `&amp;` | SPL commands with `AND`, URLs with query params |
+| `<` | `&lt;` | Literal less-than in text content |
+| `>` | `&gt;` | Literal greater-than in text content |
+
+Example:
+```xml
+<link>/app/search/search?q=status&quot;Error&quot;&amp;host=$click.value$</link>
+```
