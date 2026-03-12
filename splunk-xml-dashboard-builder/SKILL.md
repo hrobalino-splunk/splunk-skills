@@ -630,6 +630,25 @@ Row 4: User activity timeline (depends on selection)
 
 ---
 
+## Entity Mappings
+
+When special characters cannot be wrapped in `<![CDATA[...]]>`, use XML entity references:
+
+| Character | Entity | Usage |
+|---|---|---|
+| `'` | `&apos;` | Attribute values with single quotes |
+| `"` | `&quot;` | Attribute values with double quotes |
+| `&` | `&amp;` | SPL commands with `AND`, URLs with query params |
+| `<` | `&lt;` | Literal less-than in text content |
+| `>` | `&gt;` | Literal greater-than in text content |
+
+Example:
+```xml
+<link>/app/search/search?q=status&quot;Error&quot;&amp;host=$click.value$</link>
+```
+
+---
+
 ## Deployment
 
 Simple XML dashboards can be deployed by:
